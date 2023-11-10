@@ -282,4 +282,4 @@ Madhya Pradesh, India</pre>
     toastr.error("{{ Session::get('error') }}");
   })
 </script>
-@endif
+@endif 

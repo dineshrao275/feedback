@@ -62,3 +62,28 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+_-----------------------------------------------------------------_-------------------------------------------------
+
+
+1) install xampp having php version 8.
+2) set php environment variable.(the php in xampp folder in c drive)
+3) install composer.
+4) click on https://github.com/dineshrao275/feedback
+5) click on code and copy the link.
+6) open cmd and change directory to c:/>xampp/htdocs/
+7) paste the link that copied in step 5 and hit enter.
+8) now change directory to feedback and run > composer install.
+9) goto browser and write localhost/feedback/public.
+10 ) credentials for admin is user: dinesh and pass: 12345678.
+
+11)* all steps are compulsory to follow otherwise this project won't run.
+
+thanks
+regards Dinesh Rao
+
+
+
+

@@ -1,5 +1,6 @@
 @extends('layout.master')
 @section('title') Student Table @endsection
+@section('body-class') student_table @endsection
 @section('content')
 <main id="main" class="main">
 

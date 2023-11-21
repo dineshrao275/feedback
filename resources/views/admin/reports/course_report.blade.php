@@ -54,6 +54,7 @@
                                         <th scope="col">{{ $topic['name']}}</th>
                                         @endforeach
                                         @endif
+                                        <th scope="col">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,8 +62,9 @@
                                     <tr>
                                         <td>{{ $subject->name }} ( {{ $subject->faculty_name }} ) </td>
                                         @foreach($topics as $topic)
-                                        <td scope="col">{{ ( $average[$subject->code][$topic['database_name'] ]) ? ceil($average[$subject->code][$topic['database_name']]) : "-" }}</td>
+                                        <td scope="col">{{ ( $average[$subject->code][$topic['database_name'] ]) ? number_format($average[$subject->code][$topic['database_name']], 2) : "-" }}</td>
                                         @endforeach
+                                        <td>{{ $sum[$subject->name] }} </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

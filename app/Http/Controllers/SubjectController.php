@@ -35,7 +35,7 @@ class SubjectController extends Controller
             'faculty_id' => 'required',
             'semester_year' => 'required|string',
             'section' => 'required|alpha|uppercase',
-            'code' => 'required|string|unique:subjects,code,' . $request->id,
+            'code' => 'required|string',
             'subjectname' => 'required',
         ]);
 
@@ -168,7 +168,7 @@ class SubjectController extends Controller
             }
           $output .= "</tr>";
         }
-        return response()->json(["success" => "success","output" => $output]);
+        return response()->json(["success" => "success","output" => $output,"student"=>$student]);
     }
     return response()->json(["error" => "error","output" => $output,"message" => "Student doesn't exist"]);
     }

@@ -52,12 +52,12 @@
          <i class="bi bi-bar-chart"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
        </a>
        <ul id="charts-nav" class="nav-content collapse {{ Request::route()->getName() === 'report.facultywise' || Request::route()->getName() === 'admin.coursewise' || Request::route()->getName() === 'admin.course.report' || Request::route()->getName() === 'admin.faculty.report' ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-         <li class="{{ Route::currentRouteName() === 'report.facultywise' ? 'active' : '' }}">
+         <li class="{{ Route::currentRouteName() === 'report.facultywise' || Request::route()->getName() === 'admin.faculty.report' ? 'active' : '' }}">
            <a href="{{ route('report.facultywise') }}">
              <i class="bi bi-person"></i><span>Faculty Wise</span>
            </a>
          </li>
-         <li class="{{ Route::currentRouteName() === 'admin.coursewise' ? 'active' : '' }}">
+         <li class="{{ Route::currentRouteName() === 'admin.coursewise' || Request::route()->getName() === 'admin.course.report' ? 'active' : '' }}">
            <a href="{{ route('admin.coursewise') }}">
              <i class="bi bi-card-list"></i><span>Course Wise</span>
            </a>

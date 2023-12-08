@@ -105,7 +105,7 @@
                             </table>
                             @else
                             <div class="m-3">
-                                <h3 class="text-center">No subject found.</h3>
+                                <h3 class="text-center">No feedback found.</h3>
                             </div>
                             @endif
                         </div>
@@ -113,6 +113,7 @@
                     </div>
                 </div>
             </div>
+            @if($total_sum)
             <div class="col-12 text-center mt-5 mb-5"><strong>Over All Performance</strong> : 
                 @php 
                     echo number_format($total_sum,2);
@@ -133,6 +134,7 @@
                     }
                 @endphp
         </div>
+        @endif
             <div class="col-12 text-center"><button type="button" class="btn btn-success" onclick="window.print()">Print</button></div>
         </div>
     </section>

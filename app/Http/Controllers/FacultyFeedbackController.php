@@ -24,7 +24,14 @@ class FacultyFeedbackController extends Controller
     public function getFacultyFeedbackData(Request $request)
     {
         $this->data['faculty'] = Faculty::find($request->id);
-        $this->data['subjects'] = $subjects = Subject::where('faculty_id', $request->id)->get();
+        $this->data['subjects'] = $subjects = Subject::where('faculty_id', $request->id)
+        ->whereIn('id', function ($query) use ($request) {
+            $query->select('subject_id')
+                ->from('feedbacks')
+                ->where('faculty_id', $request->id);
+        })
+        ->get();
+    
         $topics = Topic::all();
         $this->data['topics'] = [];
         foreach ($topics as $topic) {

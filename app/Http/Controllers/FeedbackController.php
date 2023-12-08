@@ -16,7 +16,7 @@ class FeedbackController extends Controller
         $validator = Validator::make($request->all(), [
             'course_id' => 'required',
             'semester_year' => 'required',
-            'enrollment' => 'required|min:12|max:12',
+            'erp_id' => 'required',
             'student_name' => 'required|string|min:3',
             'session' => 'required'
         ]);
@@ -25,11 +25,9 @@ class FeedbackController extends Controller
             return redirect()->route('student_info')->withErrors($validator)->withInput()->with('error', 'Something went wrong !!!');
         } else {
 
-            $studentdata = ['course_id' => $request->course_id, 'semester_year' => $request->semester_year, 'section' => $request->section, 'enrollment' => $request->enrollment, 'student_name' => $request->student_name, 'session' => $request->session];
-            $student_id = StudentController::newStudent($studentdata);
             if($request->suggestion !=""){
                 $suggestion = new Suggestion();
-                $suggestion->student_id = $student_id;
+                $suggestion->student_id = $request->st_id;
                 $suggestion->suggestion = $request->suggestion;
                 $suggestion->save();
             }
@@ -44,7 +42,7 @@ class FeedbackController extends Controller
                 $feedbackData = $data['topicmodelentry'][$key];
 
                 $feedback = Feedback::firstOrNew([
-                    'student_id' => $student_id,
+                    'student_id' => $request->st_id,
                     'subject_id' => $subjectId,
                     'faculty_id' => $facultyId
                 ]);

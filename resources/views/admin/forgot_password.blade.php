@@ -29,7 +29,7 @@
                                             @enderror
                                         </div>
                                     </div>
-
+<!-- 
                                     <div class="col-12">
                                         <label for="yourPassword" class="form-label">New Password</label>
                                         <input type="password" name="password" class="form-control" id="yourPassword" required>
@@ -43,7 +43,7 @@
                                         @error('password_confirmation')
                                         <p class="text-danger">{{ $message }}</p>
                                         @enderror
-                                    </div>
+                                    </div> -->
                                     <div class="col-12">
                                         <span class="text-right"><a href="{{ route('admin.login') }}">Login</a> Instead </span>
                                     </div>

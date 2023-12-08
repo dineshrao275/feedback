@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MyCustomEmail;
 use App\Models\User;
 use Illuminate\Http\Request;    
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -180,23 +182,20 @@ class UserController extends Controller
     public function forgotPasswordDetails(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255|min:3',
-            'password' => 'required|confirmed|min:8',
-            'password_confirmation' => 'required|min:8',
+            'username' => 'required|string|max:255|email'
         ]);
 
         if ($validator->fails()) {
             return redirect()->route('forgot.password')->withErrors($validator)->withInput()->with('error','Please fill all details correctly !!!');
         } else {
-            $user = User::where('username',$request->username)->orWhere('email',$request->username)->orWhere('contact',$request->username)->first();
+            $user = User::where('email',$request->username)->first();
             // return $user;
             if($user){
-                $user->password = bcrypt($request->password);
-                $user->save();
-                return redirect()->route('admin.login')->with('success','Password Updated Successfully :) ');
+                Mail::to($user->email)->send(new MyCustomEmail($user));
+                return redirect()->route('admin.login')->with('success','Email sent successfully to your registered email address');
             }
             else{
-                return redirect()->route('forgot.password')->with('error','Invalid Credentials !!!!')->withInput();
+                return redirect()->route('forgot.password')->with('error',"User doesn't exists ")->withInput();
             }
 
         }

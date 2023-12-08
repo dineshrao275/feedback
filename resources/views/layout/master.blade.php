@@ -16,7 +16,7 @@
   
   <title>@yield('title') - SVIM</title>
 </head>
-<body>
+<body class = "@yield('body-class')">
     
     @yield('header')
     @yield('sidebar')

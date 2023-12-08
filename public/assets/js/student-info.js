@@ -48,7 +48,7 @@ $(document).ready(function () {
     });
   })
 
-  $('#erp_id').on("focusout", function() {
+  $('#erp_id').on("focusout", function () {
     var c_id = $('#course_id').val();
     var sem_year = $('#semester_year').val();
     var section = $('#section').val();
@@ -59,34 +59,38 @@ $(document).ready(function () {
         id: c_id,
         sem_year: sem_year,
         section: section,
-        erp_id : $(this).val()
+        erp_id: $(this).val()
       },
       success: function (response) {
-        if(response.success == "success")
-        $('#feedbacktable').html(response.output);
-      else if(response.error == 'error')
-      toastr['error'](response.message);
+        if (response.success == "success") {
+          console.log(response);
+          $('#feedbacktable').html(response.output);
+          $('#student_name').val(response.student[0].name);
+          $('#session').val(response.student[0].session);
+        }
+        else if (response.error == 'error')
+          toastr['error'](response.message);
       }
     });
   });
 
-  var url = $('#student_table').attr('action');
-  $('#student_table').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-      url: url,
-      type: 'GET',
-    },
-    columns: [
-      { data: 'erp_id', name: 'erp_id' },
-      { data: 'name', name: 'name' },
-      { data: 'course', name: 'course' },
-      { data: 'semester_year', name: 'semester_year' },
-      { data: 'section', name: 'section' },
-      { data: 'session', name: 'session' },
-    ]
-  });
-
-
+  if ($('body.student_table').length) {
+    var url = $('#student_table').attr('action');
+    $('#student_table').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: url,
+        type: 'GET',
+      },
+      columns: [
+        { data: 'erp_id', name: 'erp_id' },
+        { data: 'name', name: 'name' },
+        { data: 'course', name: 'course' },
+        { data: 'semester_year', name: 'semester_year' },
+        { data: 'section', name: 'section' },
+        { data: 'session', name: 'session' },
+      ]
+    });
+  }
 });

@@ -81,7 +81,7 @@ $(document).ready(function () {
                 $('#semester_year').val(data.subject.semester_year)
                 $('#section').val(data.subject.section);
                 $('#subjectcode').val(data.subject.code);
-                $('#subjectname').val(data.subject.name);
+                $('#name').val(data.subject.name);
             }
         });
     });

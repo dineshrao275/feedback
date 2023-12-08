@@ -24,17 +24,29 @@ class FacultyFeedbackController extends Controller
     public function getFacultyFeedbackData(Request $request)
     {
         $this->data['faculty'] = Faculty::find($request->id);
-        $this->data['subjects'] = $subjects = Subject::where('faculty_id', $request->id)->get();
+        $this->data['subjects'] = $subjects = Subject::where('faculty_id', $request->id)
+        ->whereIn('id', function ($query) use ($request) {
+            $query->select('subject_id')
+                ->from('feedbacks')
+                ->where('faculty_id', $request->id);
+        })
+        ->get();
+    
         $topics = Topic::all();
         $this->data['topics'] = [];
         foreach ($topics as $topic) {
             array_push($this->data['topics'], ["database_name" => $topic->database_name, "name" => $topic->name]);
         }
-
+        $this->data['total_sum'] = 0;
         foreach ($subjects as $key => $subject) {
             foreach ($topics as $key => $topic) {
-                $this->data['average'][$subject->code][$topic->database_name] = Feedback::where("faculty_id", $request->id)->where("subject_id", $subject->id)->avg($topic->database_name);
+                $this->data['average'][$subject->code][$topic->database_name]= $sumAverage = Feedback::where("faculty_id", $request->id)->where("subject_id", $subject->id)->avg($topic->database_name);
+                if (!isset($this->data['sum'][$subject->name])) {
+                    $this->data['sum'][$subject->name] = 0;
+                }
+                $this->data['sum'][$subject->name] += $sumAverage;
             }
+            $this->data['total_sum'] += $this->data['sum'][$subject->name];
         }
         // dd($this->data);    
         return view('admin.reports.faculty_report', $this->data);
@@ -56,13 +68,19 @@ class FacultyFeedbackController extends Controller
             array_push($this->data['topics'], ["database_name" => $topic->database_name, "name" => $topic->name]);
         }
 
+        $this->data['total_sum'] = 0;
         foreach ($subjects as $key => $subject) {
             foreach ($topics as $key => $topic) {
-                $this->data['average'][$subject->code][$topic->database_name] = Feedback::where("subject_id", $subject->id)->avg($topic->database_name);
+                $this->data['average'][$subject->code][$topic->database_name] = $sumAverage= Feedback::where("subject_id", $subject->id)->avg($topic->database_name);
+                if (!isset($this->data['sum'][$subject->name])) {
+                    $this->data['sum'][$subject->name] = 0;
+                }
+                $this->data['sum'][$subject->name] += $sumAverage;
             }
+            $this->data['total_sum'] += $this->data['sum'][$subject->name];
         }
-
-        // print_r($this->data); exit;
+        // if()
+        // dd($this->data);
         return view('admin.reports.course_report', $this->data);
     }
 }

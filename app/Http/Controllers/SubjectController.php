@@ -30,13 +30,14 @@ class SubjectController extends Controller
     // add and update subject details
     public function addUpdate(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'course_id' => 'required',
             'faculty_id' => 'required',
             'semester_year' => 'required|string',
             'section' => 'required|alpha|uppercase',
-            'code' => 'required|string|unique:subjects,code,' . $request->id,
-            'subjectname' => 'required',
+            'code' => 'required|string',
+            'name' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -45,7 +46,7 @@ class SubjectController extends Controller
             else
                 return redirect()->route('admin.subjects')->withErrors($validator)->withInput()->with('error', 'Please fill all details correctly !!');
         } else {
-            $subject = Subject::updateOrCreate(['id' => $request->id], ['name' => $request->subjectname, 'code' => $request->code, 'section' => $request->section, 'semester_year' => $request->semester_year, 'course_id' => $request->course_id, 'faculty_id' => $request->faculty_id]);
+            $subject = Subject::updateOrCreate(['id' => $request->id], ['name' => $request->name, 'code' => $request->code, 'section' => $request->section, 'semester_year' => $request->semester_year, 'course_id' => $request->course_id, 'faculty_id' => $request->faculty_id]);
 
             if ($subject) {
                 if ($request->id)
@@ -134,6 +135,7 @@ class SubjectController extends Controller
         $this->data['subject'] = DB::table('subjects as s')->select(['s.*', 'c.name as course', 'f.name as faculty'])->join('faculties as f', 's.faculty_id', 'f.id')->join('courses as c', 's.course_id', 'c.id')->where('s.id', $request->id)->first();
         $this->data['course'] = Course::all();
         $this->data['faculty'] = Faculty::all();
+        // dd($this->data);
         return response()->json($this->data);
     }
 
@@ -148,7 +150,7 @@ class SubjectController extends Controller
 
     public function getSection(Request $request)
     {
-        $sections = Subject::select('section')->where('course_id', $request->id)->where('semester_year', $request->sem_year)->distinct()->get();
+        $sections = Subject::select('section')->where('course_id', $request->id)->where('semester_year', $request->sem_year)->distinct('section')->get();
         return $sections;
     }
 
@@ -168,7 +170,7 @@ class SubjectController extends Controller
             }
           $output .= "</tr>";
         }
-        return response()->json(["success" => "success","output" => $output]);
+        return response()->json(["success" => "success","output" => $output,"student"=>$student]);
     }
     return response()->json(["error" => "error","output" => $output,"message" => "Student doesn't exist"]);
     }

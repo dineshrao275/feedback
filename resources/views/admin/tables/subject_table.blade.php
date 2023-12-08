@@ -124,9 +124,9 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-floating">
-                          <input type="text" class="form-control" id="subjectname" placeholder="Subject Name" name='subjectname'>
-                          <label for="subjectname">Subject Name</label>
-                          @error('subjectname')
+                          <input type="text" class="form-control" id="name" placeholder="Subject Name" name='name'>
+                          <label for="name">Subject Name</label>
+                          @error('name')
                           <p class="text-danger">{{ $message }}</p>
                           @enderror
                         </div>

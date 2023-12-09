@@ -6,6 +6,7 @@ use App\Mail\MyCustomEmail;
 use App\Models\User;
 use Illuminate\Http\Request;    
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -181,8 +182,11 @@ class UserController extends Controller
 
     public function forgotPasswordDetails(Request $request)
     {
+       
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255|email'
+            'username' => 'required|string|max:255|min:3|email',
+            'password' => 'required|confirmed|min:8',
+            'password_confirmation' => 'required|min:8',
         ]);
 
         if ($validator->fails()) {
@@ -191,11 +195,12 @@ class UserController extends Controller
             $user = User::where('email',$request->username)->first();
             // return $user;
             if($user){
-                Mail::to($user->email)->send(new MyCustomEmail($user));
-                return redirect()->route('admin.login')->with('success','Email sent successfully to your registered email address');
+                $user->password = bcrypt($request->password);
+                $user->save();
+                return redirect()->route('admin.login')->with('success','Password Updated Successfully :) ');
             }
             else{
-                return redirect()->route('forgot.password')->with('error',"User doesn't exists ")->withInput();
+                return redirect()->route('forgot.password')->with('error','Invalid Email Address !!!!')->withInput();
             }
 
         }

@@ -1,6 +1,6 @@
 <!-- resources/views/emails/custom_email.blade.php -->
 
-<p>Hello, {{ $user->username }}</p>
+<p>Hello, {{ $user }}</p>
 <p>Here is your Username and Password</p>
-<p>username : {{ $user->username }}</p>
-<p>password : {{ $user->password }}</p>
+<p>username : {{ $user }}</p>
+<p>password : {{ $password }}</p>

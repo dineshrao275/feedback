@@ -20,16 +20,16 @@
                                 <form class="row g-3 needs-validation pt-5" action="{{ route('forgot.password.details') }}" method="post" novalidate>
                                     @csrf
                                     <div class="col-12">
-                                        <label for="yourUsername" class="form-label">Username / Email / Mobile</label>
+                                        <label for="yourUsername" class="form-label">Registered Email</label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="text" name="username" class="form-control" id="username" value="{{ old('username') }}" required>
+                                            <input type="email" name="username" class="form-control" id="username" value="{{ old('username') }}" required>
                                             @error('username')
                                             <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
-<!-- 
+
                                     <div class="col-12">
                                         <label for="yourPassword" class="form-label">New Password</label>
                                         <input type="password" name="password" class="form-control" id="yourPassword" required>
@@ -43,7 +43,7 @@
                                         @error('password_confirmation')
                                         <p class="text-danger">{{ $message }}</p>
                                         @enderror
-                                    </div> -->
+                                    </div>
                                     <div class="col-12">
                                         <span class="text-right"><a href="{{ route('admin.login') }}">Login</a> Instead </span>
                                     </div>

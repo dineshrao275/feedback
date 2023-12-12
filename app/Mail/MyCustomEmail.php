@@ -12,16 +12,16 @@ use Illuminate\Queue\SerializesModels;
 class MyCustomEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user,$password;
+    public $user,$link;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user,$password)
+    public function __construct($user,$link)
     {
         $this->user = $user; // Set the user data
-        $this->password = $password; // Set the user data
+        $this->link = $link; // Set the user data
     }
 
     public function build()

@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title')Forgot Password @endsection
+@section('title')Reset Password @endsection
 @section('content')
 <main>
     <div class="container">
@@ -9,7 +9,7 @@
                     <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
                         <div class="d-flex justify-content-center py-4">
                             <a href="{{ route('forgot.password') }}" class="logo d-flex align-items-center w-auto">
-                                <span class="d-none d-lg-block">Forgot Password</span>
+                                <span class="d-none d-lg-block">Reset Password</span>
                             </a>
                         </div><!-- End Logo -->
 
@@ -17,24 +17,25 @@
 
                             <div class="card-body">
 
-                                <form class="row g-3 needs-validation pt-5" action="{{ route('reset.password.link') }}" method="post" novalidate>
+                                <form class="row g-3 needs-validation pt-5" action="{{ route('reset.password.store') }}" method="post" novalidate>
                                     @csrf
+                                    <input type="hidden" name="token" value="{{ $token }}" />
                                     <div class="col-12">
-                                        <label for="yourUsername" class="form-label">Registered Email</label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="email" name="username" class="form-control" id="username" value="{{ old('username') }}" required>
-                                            @error('username')
-                                            <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
+                                        <label for="yourPassword" class="form-label">New Password</label>
+                                        <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                        @error('password')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="col-12">
-                                        <span class="text-right"><a href="{{ route('admin.login') }}">Login</a> Instead </span>
+                                        <label for="yourPassword" class="form-label">Confirm Password</label>
+                                        <input type="password" name="password_confirmation" class="form-control" id="yourPassword" required>
+                                        @error('password_confirmation')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
-
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Send</button>
+                                        <button class="btn btn-primary w-100" type="submit">Update</button>
                                     </div>
                                 </form>
                             </div>

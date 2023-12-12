@@ -1,6 +1,6 @@
 @section('footer')
 
-@if(Route::currentRouteName() == 'admin.login' || Route::currentRouteName() == 'forgot.password' )
+@if(Route::currentRouteName() == 'admin.login' || Route::currentRouteName() == 'forgot.password' || Route::currentRouteName() == 'reset.password')
  @else
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">

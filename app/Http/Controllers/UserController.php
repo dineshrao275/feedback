@@ -180,37 +180,7 @@ class UserController extends Controller
         }
     }
 
-    public function forgotPasswordDetails(Request $request)
-    {
-       
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255|min:3|email',
-            'password' => 'required|confirmed|min:8',
-            'password_confirmation' => 'required|min:8',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('forgot.password')->withErrors($validator)->withInput()->with('error','Please fill all details correctly !!!');
-        } else {
-            $user = User::where('email',$request->username)->first();
-            // return $user;
-            if($user){
-                $user->password = bcrypt($request->password);
-                $user->save();
-                return redirect()->route('admin.login')->with('success','Password Updated Successfully :) ');
-            }
-            else{
-                return redirect()->route('forgot.password')->with('error','Invalid Email Address !!!!')->withInput();
-            }
-
-        }
-
-    }
-
-    function forgotPassword(Request $request){
-        return view('admin.forgot_password',$this->data);
-    }
-
+   
     function logout(Request $request){
         Auth::logout();
         return redirect()->route('admin.login')->with('success','Logout Successfully');

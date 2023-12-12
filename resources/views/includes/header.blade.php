@@ -1,6 +1,6 @@
  @section('header')
  
- @if(Route::currentRouteName() == 'admin.login' || Route::currentRouteName() == 'forgot.password' )
+ @if(Route::currentRouteName() == 'admin.login' || Route::currentRouteName() == 'forgot.password' || Route::currentRouteName() == 'reset.password' )
  @else
  <!-- ======= Header ======= -->
  <header id="header" class="header fixed-top d-flex align-items-center">

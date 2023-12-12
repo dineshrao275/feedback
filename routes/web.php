@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\FacultyFeedbackController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TopicController;
@@ -29,8 +30,10 @@ Route::post('loginDetails', [UserController::class, 'authenticate'])->name('logi
 Route::get('login', [UserController::class, 'checkLogin'])->name('admin.login');
 
 // Forgot password
-Route::post('forgot_password_details', [UserController::class, 'forgotPasswordDetails'])->name('forgot.password.details');
-Route::get('forgot_password', [UserController::class, 'forgotPassword'])->name('forgot.password');
+Route::get('forgot_password', [ForgetPasswordController::class, 'index'])->name('forgot.password');
+Route::post('reset_password_link', [ForgetPasswordController::class, 'resetPasswordLink'])->name('reset.password.link');
+Route::get('reset-password/{token}', [ForgetPasswordController::class, 'resetPassword'])->name('reset.password');
+Route::post('reset_password_store', [ForgetPasswordController::class, 'resetPasswordStore'])->name('reset.password.store');
 
 
 

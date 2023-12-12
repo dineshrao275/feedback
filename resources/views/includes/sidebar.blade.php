@@ -1,6 +1,6 @@
  @section('sidebar')
  
- @if(Route::currentRouteName() == 'admin.login' || Route::currentRouteName() == 'forgot.password' )
+ @if(Route::currentRouteName() == 'admin.login' || Route::currentRouteName() == 'forgot.password' || Route::currentRouteName() == 'reset.password' )
  @else
  <!-- ======= Sidebar ======= -->
  <aside id="sidebar" class="sidebar">

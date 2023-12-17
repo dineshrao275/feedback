@@ -25,7 +25,7 @@ class TopicController extends Controller
         ]);
         if ($validator->fails()) {
             if ($request->id)
-                return redirect()->route('admin.topic_table,$this->data')->withErrors($validator)->withInput()->with('error', 'Please fill all details correctly !!');
+                return redirect()->route('admin.topic_table',$this->data)->withErrors($validator)->withInput()->with('error', 'Please fill all details correctly !!');
             else
                 return redirect()->route('admin.topics', $this->data)->withErrors($validator)->withInput()->with('error', 'Please fill all details correctly !!');
         } else {
